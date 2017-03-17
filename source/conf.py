@@ -52,8 +52,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Sonma OpenAPI'
-copyright = '2017, wanhongming'
-author = 'wanhongming'
+copyright = '2017, 杭州胜马科技有限公司'
+author = '万宏明'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
