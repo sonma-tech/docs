@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Sonma OpenAPI's documentation!
-=========================================
+SonmaOpenAPI 文档
+===============
 
 .. toctree::
    :maxdepth: 2
@@ -12,8 +12,8 @@ Welcome to Sonma OpenAPI's documentation!
 
 
 
-Indices and tables
-==================
+二级标题
+====
 
 * :ref:`genindex`
 * :ref:`modindex`
