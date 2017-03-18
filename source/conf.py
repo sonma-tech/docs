@@ -26,6 +26,10 @@ extensions = [
               'sphinx.ext.mathjax',
               'sphinx.ext.ifconfig',
               'sphinx.ext.viewcode',
+              'sphinx.ext.doctest',
+              'sphinx.ext.coverage',
+              'sphinx.ext.autosummary',
+              'sphinx.ext.autodoc',
               ]
 
 #sphinxcontrib.images  .. thumbnail :: picture.png
