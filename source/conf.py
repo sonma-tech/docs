@@ -6,8 +6,6 @@ import os
 import sys
 import sphinx_rtd_theme
 
-sys.path.append(os.path.abspath('_exts'))
-
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
