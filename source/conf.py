@@ -106,7 +106,7 @@ htmlhelp_basename = 'SonmaOpenAPIdoc'
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'SonmaOpenAPI.tex', 'Sonma OpenAPI Documentation',
+    (master_doc, 'SonmaOpenAPI.tex', u'Sonma OpenAPI Documentation',
      u'杭州胜马科技有限公司', 'manual'),
 ]
 
