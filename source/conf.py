@@ -45,8 +45,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Sonma OpenAPI'
-copyright = '2017, 杭州胜马科技有限公司'
-author = '万宏明'
+copyright = u'2017, 杭州胜马科技有限公司'
+author = u'万宏明'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -109,7 +109,7 @@ htmlhelp_basename = 'SonmaOpenAPIdoc'
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'SonmaOpenAPI.tex', 'Sonma OpenAPI Documentation',
-     'whm', 'manual'),
+     u'杭州胜马科技有限公司', 'manual'),
 ]
 
 latex_elements = {
