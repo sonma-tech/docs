@@ -107,7 +107,7 @@ htmlhelp_basename = 'SonmaOpenAPIdoc'
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'SonmaOpenAPI.tex', 'Sonma OpenAPI Documentation',
-     '杭州胜马科技有限公司', 'manual'),
+     u'杭州胜马科技有限公司', 'manual'),
 ]
 
 latex_elements = {
