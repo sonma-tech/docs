@@ -111,28 +111,44 @@ htmlhelp_basename = 'SonmaOpenAPIdoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
+
+# Output file base name for HTML help builder.
+
+# -- Options for LaTeX output ---------------------------------------------
+latex_elements = {
+    # The paper size ('letterpaper' or 'a4paper').
+    #'papersize': 'letterpaper',
+
+    # The font size ('10pt', '11pt' or '12pt').
+    #'pointsize': '10pt',
+
+    # Additional stuff for the LaTeX preamble.
+    'preamble': r'''
+    \hypersetup{unicode=true}
+    \usepackage{CJKutf8}
+    \DeclareUnicodeCharacter{00A0}{\nobreakspace}
+    \DeclareUnicodeCharacter{2203}{\ensuremath{\exists}}
+    \DeclareUnicodeCharacter{2200}{\ensuremath{\forall}}
+    \DeclareUnicodeCharacter{2286}{\ensuremath{\subseteq}}
+    \DeclareUnicodeCharacter{2713}{x}
+    \DeclareUnicodeCharacter{27FA}{\ensuremath{\Longleftrightarrow}}
+    \DeclareUnicodeCharacter{221A}{\ensuremath{\sqrt{}}}
+    \DeclareUnicodeCharacter{221B}{\ensuremath{\sqrt[3]{}}}
+    \DeclareUnicodeCharacter{2295}{\ensuremath{\oplus}}
+    \DeclareUnicodeCharacter{2297}{\ensuremath{\otimes}}
+    \begin{CJK}{UTF8}{gbsn}
+    \AtEndDocument{\end{CJK}}
+    ''',
+}
+
+# Grouping the document tree into LaTeX files. List of tuples
+# (source start file, target name, title,
+#  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'SonmaOpenAPI.tex', 'Sonma OpenAPI Documentation',
+    (master_doc, 'SonmaAPI.tex', 'SonmaOpenAPI Document',
      u'杭州胜马科技有限公司', 'manual'),
 ]
 
-latex_elements = {
-    # The paper size ('letterpaper' or 'a4paper').
-    #
-    # 'papersize': 'letterpaper',
-
-    # The font size ('10pt', '11pt' or '12pt').
-    #
-    # 'pointsize': '10pt',
-
-    # Additional stuff for the LaTeX preamble.
-    #
-    # 'preamble': '',
-
-    # Latex figure (float) alignment
-    #
-    # 'figure_align': 'htbp',
-}
 # -- Options for manual page output ---------------------------------------
 
 # One entry per manual page. List of tuples
@@ -161,39 +177,3 @@ epub_copyright = copyright
 
 
 epub_exclude_files = ['search.html']
-
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-if on_rtd:
-    latex_elements = {
-        # The paper size ('letterpaper' or 'a4paper').
-        #'papersize': 'letterpaper',
-        # The font size ('10pt', '11pt' or '12pt').
-        #'pointsize': '10pt',
-        # Additional stuff for the LaTeX preamble.
-        'preamble': r'''
-    \hypersetup{unicode=true}
-    \usepackage{CJKutf8}
-    \DeclareUnicodeCharacter{00A0}{\nobreakspace}
-    \DeclareUnicodeCharacter{2203}{\ensuremath{\exists}}
-    \DeclareUnicodeCharacter{2200}{\ensuremath{\forall}}
-    \DeclareUnicodeCharacter{2286}{\ensuremath{\subseteq}}
-    \DeclareUnicodeCharacter{2713}{x}
-    \DeclareUnicodeCharacter{27FA}{\ensuremath{\Longleftrightarrow}}
-    \DeclareUnicodeCharacter{221A}{\ensuremath{\sqrt{}}}
-    \DeclareUnicodeCharacter{221B}{\ensuremath{\sqrt[3]{}}}
-    \DeclareUnicodeCharacter{2295}{\ensuremath{\oplus}}
-    \DeclareUnicodeCharacter{2297}{\ensuremath{\otimes}}
-    \begin{CJK}{UTF8}{gbsn}
-    \AtEndDocument{\end{CJK}}
-    ''',
-    }
-else:
-    latex_elements = {
-        'papersize' : 'a4paper',
-        'utf8extra' : '',
-        'inputenc'  : '',
-        'babel'     : r'''\usepackage[english]{babel}''',
-        'preamble' : r'''
-        \usepackage{ctex}
-        ''',
-    }
