@@ -17,6 +17,6 @@ SonmaOpenAPI 文档
 .. toctree::
     :maxdepth: 2
 
-        quickstart
-        interface
-        changelog
+    quickstart
+    interface
+    changelog
