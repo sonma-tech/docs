@@ -6,8 +6,6 @@ import os
 import sys
 import sphinx_rtd_theme
 
-sys.path.insert(0, os.path.abspath("../")) # Important
-
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -20,7 +18,7 @@ sys.path.insert(0, os.path.abspath("../")) # Important
 extensions = [
               'sphinx.ext.todo',
               'sphinx.ext.autodoc',
-              # 'sphinxcontrib.images',
+              'sphinxcontrib.images',
               'sphinx.ext.intersphinx',
               'sphinxcontrib.httpdomain',
               'sphinx.ext.mathjax',
@@ -145,7 +143,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'SonmaAPI.tex', 'SonmaOpenAPI Document',
+    (master_doc, 'SonmaAPI.tex', u'胜马云打印API文档',
      u'杭州胜马科技有限公司', 'manual'),
 ]
 
