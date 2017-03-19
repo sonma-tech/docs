@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.abspath("../")) # Important
 extensions = [
               'sphinx.ext.todo',
               'sphinx.ext.autodoc',
-              'sphinxcontrib.images',
+              # 'sphinxcontrib.images',
               'sphinx.ext.intersphinx',
               'sphinxcontrib.httpdomain',
               'sphinx.ext.mathjax',
