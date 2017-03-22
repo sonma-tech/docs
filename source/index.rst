@@ -26,4 +26,3 @@ SonmaOpenAPI 文档
 
 
 
-.. thumbnail:: http://7xi8d6.com1.z0.glb.clouddn.com/2017-03-17-17332809_1277469728986540_3201752429582352384_n.jpg

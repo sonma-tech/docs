@@ -75,13 +75,13 @@ Lorem ipsum [Ref]_ dolor sit amet.
       归档文件的文档, 包含 GNU tar 扩展.
 
 .. hlist::
-:columns: 5
+    :columns: 5
 
-        * 列表
-        * 的子
-        * 项会
-        * 水平
-        * 排列
+    * 列表
+    * 的子
+    * 项会
+    * 水平
+    * 排列
 
 
 .. code-block:: python
@@ -100,5 +100,6 @@ Lorem ipsum [Ref]_ dolor sit amet.
 
 术语 :ref:`glossary`
 
+术语引用 :term:`environment`
 
-这一行有一个术语 :term:`environment`
+.. thumbnail:: http://7xi8d6.com1.z0.glb.clouddn.com/2017-03-17-17332809_1277469728986540_3201752429582352384_n.jpg
