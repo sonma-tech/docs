@@ -11,7 +11,7 @@
 接口地址
 ^^^^^^^^
 
-.. http:get:: /users/{id}/posts/{tag}
+.. http:post:: /v1/print
 
 请求参数
 ^^^^^^^^
