@@ -14,8 +14,6 @@ SonmaOpenAPI 文档
 
 如有任何对接疑问，请发邮件至  `openapi@sonma.com.cn`_
 
-.. important::
-    该文档会在2月26号正式发布,相关的服务如期部署上线.
 
 .. toctree::
     :maxdepth: 2
