@@ -103,3 +103,14 @@ Lorem ipsum [Ref]_ dolor sit amet.
 术语引用 :term:`environment`
 
 .. thumbnail:: http://7xi8d6.com1.z0.glb.clouddn.com/2017-03-17-17332809_1277469728986540_3201752429582352384_n.jpg
+
+
+
+.. csv-table:: Frozen Delights!
+ :header: "Treat", "Quantity", "Description"
+ :widths: 15, 10, 30
+
+     "Albatross", 2.99, "On a stick!"
+     "Crunchy Frog", 1.49, "If we took the bones out, it wouldn't be
+     crunchy, now would it?"
+     "Gannet Ripple", 1.99, "On a stick!"

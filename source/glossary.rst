@@ -5,9 +5,5 @@
 
 .. glossary::
 
-   environment
-      一个结构，包含信息是所有文档的保存路径，使用的参考文献等.
-      在解析的阶段使用，因此连续运行时仅需解析新的或修改过的文档.
-
-   source directory
-      根路径，包含子目录，包含一个Sphinx工程的所有源文件.
+   Authorization
+      鉴权字符串
