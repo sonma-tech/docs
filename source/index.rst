@@ -22,8 +22,6 @@ SonmaOpenAPI 文档
     interface
     paiban
     changelog
-    template
-
 
 
 
