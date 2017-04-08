@@ -144,6 +144,15 @@
 
     当请求参数为空时,待签字符串(``StringToSign``)中, ``Timestamp`` 后也要加上 ``\n``
 
+DEMO
+--------------
+
+JAVA
+^^^^^^^^^^^^^^
+
+.. literalinclude:: ../../demo/src/main/java/net/sonma/openapi/demo/PrintDemo.java
+        :language: java
+
 
 
 特别说明
@@ -182,3 +191,8 @@
 测试账号
 --------------
 AccessKey: 123456789, SecretKey: 123456789, 打印机唯一编号:123456789
+
+
+.. _glossary:
+
+.. include:: glossary.rst
