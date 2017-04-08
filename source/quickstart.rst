@@ -167,7 +167,7 @@ DEMO
 JAVA
 ^^^^^^^^^^^^^^
 
-.. literalinclude:: ../../demo/src/main/java/net/sonma/openapi/demo/PrintDemo.java
+.. literalinclude:: _static/PrintDemo.java
         :language: java
 
 

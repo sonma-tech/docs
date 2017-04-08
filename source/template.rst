@@ -1,5 +1,3 @@
-.. _template:
-
 模板
 =========
 
@@ -100,7 +98,7 @@ Lorem ipsum [Ref]_ dolor sit amet.
 
 术语 :ref:`glossary`
 
-术语引用 :term:`environment`
+术语引用 :term:`Authorization`
 
 .. thumbnail:: http://7xi8d6.com1.z0.glb.clouddn.com/2017-03-17-17332809_1277469728986540_3201752429582352384_n.jpg
 
