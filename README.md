@@ -1,1 +1,1 @@
-# sonma [![Documentation Status](https://readthedocs.org/projects/sonma/badge/?version=latest)](http://sonma.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/sonma/badge/?version=latest)](http://docs.sonma.net/zh_CN/latest/?badge=latest)

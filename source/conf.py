@@ -48,6 +48,7 @@ master_doc = 'index'
 # General information about the project.
 project = 'Sonma OpenAPI'
 copyright = u'2017, 杭州胜马科技有限公司'
+
 author = u'万宏明'
 
 # The version info for the project you're documenting, acts as replacement for
