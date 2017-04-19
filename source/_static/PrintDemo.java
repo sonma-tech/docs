@@ -94,18 +94,16 @@ public class PrintDemo {
 
                 //创建规范查询字符串CanonicalQueryString,对参数名和值使用URI 编码
                 paramNames.forEach(paramName -> {
-                    try {
-                        if (queryString.length() != 0) {
-                            queryString.append("&");
-                        }
-                        queryString.append(URLEncoder.encode(paramName, "UTF-8")).
-                                append("=").
-                                append(URLEncoder.encode(params.get(paramName), "UTF-8"));
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
+                    if (queryString.length() != 0) {
+                        queryString.append("&");
                     }
+                    queryString.append(SignatureUtil.encodeRFC3986(paramName)).
+                            append("=").
+                            append(SignatureUtil.encodeRFC3986(params.get(paramName)));
+
                 });
-                String canonicalQueryString = queryString.toString().replace("+","%20").replace("*","%2A").replace("%7E","~");
+
+                String canonicalQueryString = queryString.toString();
 
                 System.out.println("规范查询字符串(CanonicalQueryString):" + canonicalQueryString);
                 String hashedQueryString = SignatureUtil.sha1AsHex(canonicalQueryString.toString());
@@ -187,6 +185,23 @@ public class PrintDemo {
             }
         }
 
+        public static String encodeRFC3986(String str) {
+            String result;
+
+            try {
+                result = URLEncoder.encode(str, "UTF-8")
+                        .replace("+", "%20")
+                        .replace("*", "%2A")
+                        .replace("%7E", "~");
+            }
+
+            // This exception should never occur.
+            catch (UnsupportedEncodingException e) {
+                result = str;
+            }
+
+            return result;
+        }
 
     }
 }

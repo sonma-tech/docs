@@ -16,6 +16,7 @@
 .. _access-key:
 
 .. important::
+
     ``AccessKey`` 和 ``SecretKey`` 是您访问胜马云API的密钥，具有该账户完全的权限，请您妥善保管，泄漏后需及时重置。
 
 
@@ -83,7 +84,7 @@ Timestamp        是          请求创建的时间戳(10位)。格林威治时�
 .. note::
 
     一般支持URL编码的库（比如Java中的java.net.URLEncoder）都是按照“application/x-www-form-urlencoded”的MIME类型的规则进行编码的。实现时可以直接使用这类方式进行编码，把编码后的字符串中加号（+）替换成%20、星号（*）替换成%2A、%7E替换回波浪号（~），即可得到上述规则描述的编码字符串。
-
+    `JavaScript RFC3986 <https://af-design.com/2008/03/14/rfc-3986-compliant-uri-encoding-in-javascript/>`_,PHP可直接使用 ``rawurlencode``
 相关函数说明
 ^^^^^^^^^^^^^
 
@@ -172,7 +173,175 @@ JAVA
 ^^^^^^^^^^^^^^
 
 .. literalinclude:: _static/PrintDemo.java
-        :language: java
+:language: java
+
+JavaScript
+^^^^^^^^^^^^^^
+
+
+.. raw:: html
+
+    <embed>
+            <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+            <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+            <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+                  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+            <link href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+            <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+            <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+                    crossorigin="anonymous"></script>
+            <script src="https://cdn.bootcss.com/crypto-js/3.1.9/core.min.js"></script>
+            <script src="https://cdn.bootcss.com/crypto-js/3.1.9/sha1.min.js"></script>
+            <script src="https://cdn.bootcss.com/crypto-js/3.1.9/hmac.min.js"></script>
+            <script src="https://cdn.bootcss.com/crypto-js/3.1.9/enc-base64.js"></script>
+            <script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+
+            <script type="text/javascript">
+
+                defaultContent =
+                    "<REPEAT><P1>商家联</P1><P2>客户联</P2><P3>  存根</P3></REPEAT>\n" +
+                    "<CB>胜马旗舰店</CB>\n" +
+                    "<C>江虹国际创意园6E1201</C>\n" +
+                    "单号:1002325            时间:2016-07-13 13:24\n" +
+                    "客户:0013               员工:1605\n" +
+                    "------------------------------------------------\n" +
+                    "货号        名称              数量  单价    小计\n" +
+                    "------------------------------------------------\n" +
+                    "XY80        80打印机            2   500     1000\n" +
+                    "------------------------------------------------\n" +
+                    "数量:                           2\n" +
+                    "总计:                                       1000\n" +
+                    "------------------------------------------------\n" +
+                    "<B>微信:500</B>\n" +
+                    "<B>未付:500</B>\n" +
+                    "------------------------------------------------\n" +
+                    "农行卡：6228 4800 8207 8306 717\n" +
+                    "工行卡：6222 0236 0202 3368 921\n" +
+                    "户名：杭州胜马科技有限公司\n" +
+                    "温馨提示：如发现质量问题，凭此开单票据，本市的三天内，外地七日内调换，若人为损坏，开不退换！\n" +
+                    "------------------------------------------------\n" +
+                    "单据打印时间:                   2016-07-13 13:34\n" +
+                    "------------------------------------------------\n" +
+                    "技术支持(全国):0571-85353593           胜马科技";
+
+
+                function encodeRFC3986(str) {
+                    return encodeURIComponent(str)
+                        .replace(/!/g, '%21')
+                        .replace(/\*/g, '%2A')
+                        .replace(/\(/g, '%28')
+                        .replace(/\)/g, '%29')
+                        .replace(/'/g, '%27');
+                }
+                function print() {
+                    var form = new FormData(document.getElementById("form-print"));
+
+                    var ak = form.get("ak");
+                    var sk = form.get("sk");
+                    var content = form.get("content");
+                    var sn = form.get("sn");
+
+                    var timestamp = 0;//Math.round(+new Date() / 1000);
+
+                    console.log(timestamp);
+
+                    const params = {
+                        "printer_sn": sn,
+                        "content": content,
+                        "times": 1
+                    };
+
+
+                    console.log(JSON.stringify(params));
+
+
+                    var queryString = "";
+
+                    Object.keys(params).sort().forEach(function (key) {
+                        if (queryString.length !== 0) {
+                            queryString += "&";
+                        }
+                        queryString += encodeRFC3986(key) + "=" + encodeRFC3986(params[key]);
+                    });
+
+
+                    console.log("规范查询字符串(CanonicalQueryString):" + queryString);
+
+
+                    const hashedQueryString = CryptoJS.SHA1(queryString).toString().toLowerCase();
+
+
+                    console.log("规范查询字符串哈希(HashedCanonicalQueryString):" + hashedQueryString);
+
+
+                    const stringToSign = timestamp + "\n" + hashedQueryString;
+                    console.log("待签字符串(StringToSign):" + stringToSign);
+                    const signature = CryptoJS.HmacSHA1(stringToSign, sk).toString(); //SignatureUtil.macSignature(stringToSign, SK);
+                    console.log("签名(Signature):" + signature);
+                    const authorization = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse("HMAC-SHA1 " + ak + ":" + signature));
+                    console.log("鉴权字符串(Authorization):" + authorization);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "https://api.sonma.net/v1/print",
+                        headers: {
+                            "Authorization": authorization,
+                            "Timestamp": timestamp
+                        },
+                        contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+                        data: queryString,
+                        success: function (data) {
+                            if (data["code"] === 0) {
+                                toastr.success("打印成功")
+                            }else{
+                                toastr.error(data["message"])
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            toastr.error(errorThrown)
+                        }
+
+                    });
+                }
+
+                $(document).ready(function () {
+                    $("#content").text(defaultContent)
+                })
+            </script>
+        <div class="container" style="width:100%;">
+            <form name="form" id="form-print" class="center">
+                <fieldset>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon glyphicon glyphicon-exclamation-sign"></span>
+                        <input type="text" id="ak" name="ak" placeholder="AccessKey" class="form-control"/>
+                    </div>
+                    <div class="input-group input-group-lg" style="margin-top: 8px;">
+                        <span class="input-group-addon glyphicon glyphicon-exclamation-sign"></span>
+                        <input type="text" id="sk" name="sk" placeholder="SecretKey" class="form-control"/>
+                    </div>
+
+                    <div class="input-group input-group-lg" style="margin-top: 8px;">
+                        <span class="input-group-addon glyphicon glyphicon-print"></span>
+                        <input type="text" id="sn" name="sn" placeholder="PrinterSN" class="form-control"/>
+                    </div>
+
+                    <textarea id="content" name="content" placeholder="Content" class="form-control" rows="10"
+                              style="resize: none;margin-top: 8px;"></textarea>
+                </fieldset>
+                <input type="button"
+                       onclick="print();"
+                       id="btn-print"
+                       value="打印"
+                       class="btn btn-primary btn-lg btn-block"
+                       style="margin-top: 12px;"
+                />
+
+            </form>
+        </div>
+    </embed>
+
+
 
 
 
@@ -217,3 +386,5 @@ AccessKey: 123456789, SecretKey: 123456789, 打印机唯一编号:123456789
 .. _glossary:
 
 .. include:: glossary.rst
+
+
