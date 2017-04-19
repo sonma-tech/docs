@@ -105,7 +105,7 @@ public class PrintDemo {
                         e.printStackTrace();
                     }
                 });
-                String canonicalQueryString = queryString.toString().replace("\\+","%20").replace("*","%2A").replace("%7E","~");
+                String canonicalQueryString = queryString.toString().replace("+","%20").replace("*","%2A").replace("%7E","~");
 
                 System.out.println("规范查询字符串(CanonicalQueryString):" + canonicalQueryString);
                 String hashedQueryString = SignatureUtil.sha1AsHex(canonicalQueryString.toString());
