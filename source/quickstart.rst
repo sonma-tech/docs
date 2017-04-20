@@ -236,14 +236,12 @@ JavaScript
                         .replace(/'/g, '%27');
                 }
                 function print() {
-                    var form = new FormData(document.getElementById("form-print"));
+                    var ak = $("#ak")[0].value;
+                    var sk =  $("#sk")[0].value;
+                    var sn =  $("#sn")[0].value;
+                    var content =  $("#content")[0].value;
 
-                    var ak = form.get("ak");
-                    var sk = form.get("sk");
-                    var content = form.get("content");
-                    var sn = form.get("sn");
-
-                    var timestamp = 0;//Math.round(+new Date() / 1000);
+                    var timestamp = Math.round(+new Date() / 1000);
 
                     console.log(timestamp);
 
