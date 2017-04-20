@@ -85,6 +85,7 @@ Timestamp        是          请求创建的时间戳(10位)。格林威治时�
 
     一般支持URL编码的库（比如Java中的java.net.URLEncoder）都是按照“application/x-www-form-urlencoded”的MIME类型的规则进行编码的。实现时可以直接使用这类方式进行编码，把编码后的字符串中加号（+）替换成%20、星号（*）替换成%2A、%7E替换回波浪号（~），即可得到上述规则描述的编码字符串。
     `JavaScript RFC3986 <https://af-design.com/2008/03/14/rfc-3986-compliant-uri-encoding-in-javascript/>`_,PHP可直接使用 ``rawurlencode``
+
 相关函数说明
 ^^^^^^^^^^^^^
 
@@ -173,7 +174,7 @@ JAVA
 ^^^^^^^^^^^^^^
 
 .. literalinclude:: _static/PrintDemo.java
-:language: java
+    :language: java
 
 JavaScript
 ^^^^^^^^^^^^^^
@@ -313,17 +314,17 @@ JavaScript
             <form name="form" id="form-print" class="center">
                 <fieldset>
                     <div class="input-group input-group-lg">
-                        <span class="input-group-addon glyphicon glyphicon-exclamation-sign"></span>
-                        <input type="text" id="ak" name="ak" placeholder="AccessKey" class="form-control"/>
+                        <span class="input-group-addon" id="addon-ak">@</span>
+                        <input type="text" id="ak" name="ak" placeholder="AccessKey" class="form-control" aria-describedby="addon-ak"/>
                     </div>
                     <div class="input-group input-group-lg" style="margin-top: 8px;">
-                        <span class="input-group-addon glyphicon glyphicon-exclamation-sign"></span>
-                        <input type="text" id="sk" name="sk" placeholder="SecretKey" class="form-control"/>
+                        <span class="input-group-addon" id="addon-sk">@</span>
+                        <input type="text" id="sk" name="sk" placeholder="SecretKey" class="form-control" aria-describedby="addon-sk"/>
                     </div>
 
                     <div class="input-group input-group-lg" style="margin-top: 8px;">
-                        <span class="input-group-addon glyphicon glyphicon-print"></span>
-                        <input type="text" id="sn" name="sn" placeholder="PrinterSN" class="form-control"/>
+                        <span class="input-group-addon" id="addon-sn">@</span>
+                        <input type="text" id="sn" name="sn" placeholder="PrinterSN" class="form-control" aria-describedby="addon-sn"/>
                     </div>
 
                     <textarea id="content" name="content" placeholder="Content" class="form-control" rows="10"
