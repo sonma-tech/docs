@@ -201,7 +201,6 @@ JavaScript
             <script type="text/javascript">
 
                 defaultContent =
-                    "<REPEAT><P1>商家联</P1><P2>客户联</P2><P3>  存根</P3></REPEAT>\n" +
                     "<CB>胜马旗舰店</CB>\n" +
                     "<C>江虹国际创意园6E1201</C>\n" +
                     "单号:1002325            时间:2016-07-13 13:24\n" +
@@ -235,7 +234,7 @@ JavaScript
                         .replace(/\)/g, '%29')
                         .replace(/'/g, '%27');
                 }
-                function print() {
+                function sonmaPrint() {
                     var ak = $("#ak")[0].value;
                     var sk =  $("#sk")[0].value;
                     var sn =  $("#sn")[0].value;
@@ -329,7 +328,7 @@ JavaScript
                               style="resize: none;margin-top: 8px;"></textarea>
                 </fieldset>
                 <input type="button"
-                       onclick="print();"
+                       onclick="sonmaPrint();"
                        id="btn-print"
                        value="打印"
                        class="btn btn-primary btn-lg btn-block"
