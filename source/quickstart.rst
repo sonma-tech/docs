@@ -6,12 +6,9 @@
 对接流程
 -----------
 
-1. 在开放平台注册账号
-2. 提交个人或公司认证信息
-3. 待审核通过后登陆管理后台,进入 ``AccessKeys管理界面`` 创建 ``AccessKey`` 并录好生成的 ``SecretKey``
-4. 打印机在出厂时会绑定该账户下
-5. 接口对接
-
+1. 申请 ``AccessKey`` , ``SecretKey``
+2. 接口对接
+3. 模板对接
 
 .. _access-key:
 
@@ -112,9 +109,12 @@ Timestamp        是          请求创建的时间戳(10位)。格林威治时�
 
 .. code-block:: bash
 
-    GET /v1/auth/access_token?printer_sn=123456789&state=哈哈哈&scopes=print HTTP/1.1
-    Host: localhost:8080
-    Timestamp: 1490606603
+    POST /v1/print/ HTTP/1.1
+    Host: api.sonma.net
+    Cache-Control: no-cache
+    Content-Type: application/x-www-form-urlencoded
+
+    sn=123456789&content=~%25%24_%3D+%2B-*%26!%40
 
 1. 创建待签字符串
     1. 以请求时间戳开头，后跟换行符。该值必须与您在请求头中(``Timestamp``)使用的值匹配。 ::
@@ -125,43 +125,46 @@ Timestamp        是          请求创建的时间戳(10位)。格林威治时�
 
         1. 示例请求参数如下 ::
 
-            printer_sn=123456789&state=哈哈哈&scopes=print
+            sn=123456789&content=~%25%24_%3D+%2B-*%26!%40
 
         2. URI编码排序后查询字符串如下(``CanonicalQueryString``) ::
 
-            printer_sn=123456789&scopes=print&state=%E5%93%88%E5%93%88%E5%93%88
+            content=~%25%24_%3D%20%2B-%2A%26%21%40&sn=123456789
 
         3. 规范查询字符串哈希(``HashedCanonicalQueryString``) ::
 
-            CanonicalQueryString = "printer_sn=123456789&scopes=print&state=%E5%93%88%E5%93%88%E5%93%88"
-            HashedCanonicalQueryString = HexEncode(Hash(CanonicalQueryString)
-                                       = "0e76b1407a0dd4fbc46231fb8b248ed31960e3ba"
+            CanonicalQueryString =
+            HashedCanonicalQueryString = HexEncode(Hash("content=~%25%24_%3D%20%2B-%2A%26%21%40&sn=123456789") = "3569685add9e801b08d022098df910d7728a4182"
+
 
     3. 示例待签字符串(``StringToSign``) ::
 
-        1490606603\n
-        0e76b1407a0dd4fbc46231fb8b248ed31960e3ba
+        1496497853\n3569685add9e801b08d022098df910d7728a4182
 
 .. _signature:
 
-2. 计算签名(``Signature``),设此时 ``AccessKey`` 为 123456789, ``SecretKey`` 为 123456789 ::
+2. 计算签名(``Signature``), ``AccessKey``: 123456789, ``SecretKey``: 123456789 ::
 
     SecretKey = "123456789"
-    StringToSign = "1490606603\n0e76b1407a0dd4fbc46231fb8b248ed31960e3ba"
+    StringToSign = "1496497853\n3569685add9e801b08d022098df910d7728a4182"
     Signature = HexEncode(HmacSHA1(StringToSign,SecretKey))
-              = "867f280f2e28d8d784fcbb33a38dc2c0f74510c3"
+              = "a44c5a562a106aa72e15f5f3a0fab93cd36996b8"
 
 3. 生成签名字符串 ::
 
-    Authorization = Base64("HMAC-SHA1 123456789:867f280f2e28d8d784fcbb33a38dc2c0f74510c3")
-                  = "SE1BQy1TSEExIDEyMzQ1Njc4OTo4NjdmMjgwZjJlMjhkOGQ3ODRmY2JiMzNhMzhkYzJjMGY3NDUxMGMz"
+    Authorization = Base64("HMAC-SHA1 123456789:a44c5a562a106aa72e15f5f3a0fab93cd36996b8")
+                  = "SE1BQy1TSEExIDEyMzQ1Njc4OTphNDRjNWE1NjJhMTA2YWE3MmUxNWY1ZjNhMGZhYjkzY2QzNjk5NmI4"
 
 4. 完整的请求 ::
 
-    GET /v1/auth/access_token?printer_sn=123456789&state=哈哈哈&scopes=print HTTP/1.1
-    Host: localhost:8080
-    Timestamp: 1490606603
-    Authorization: SE1BQy1TSEExIDEyMzQ1Njc4OTo4NjdmMjgwZjJlMjhkOGQ3ODRmY2JiMzNhMzhkYzJjMGY3NDUxMGMz
+    POST /v1/print/ HTTP/1.1
+    Host: api.sonma.net
+    Authorization: SE1BQy1TSEExIDEyMzQ1Njc4OTphNDRjNWE1NjJhMTA2YWE3MmUxNWY1ZjNhMGZhYjkzY2QzNjk5NmI4
+    Timestamp: 1496497853
+    Cache-Control: no-cache
+    Content-Type: application/x-www-form-urlencoded
+
+    sn=123456789&content=~%25%24_%3D+%2B-*%26!%40
 
 .. important::
 
@@ -245,9 +248,8 @@ JavaScript
                     console.log(timestamp);
 
                     const params = {
-                        "printer_sn": sn,
-                        "content": content,
-                        "times": 1
+                        "sn": sn,
+                        "content": content
                     };
 
 
@@ -342,6 +344,7 @@ JavaScript
 
 
 
+.. _important:
 
 特别说明
 --------------
