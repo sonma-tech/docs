@@ -46,7 +46,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Sonma OpenAPI'
+project = 'SONMA API'
 copyright = u'2017, 杭州胜马科技有限公司'
 
 author = u'万宏明'
@@ -101,7 +101,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'SonmaOpenAPIdoc'
+htmlhelp_basename = 'SONMAAPI'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -144,7 +144,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'SonmaAPI.tex', u'胜马云打印API文档',
+    (master_doc, 'SONMAAPI.tex', u'胜马云打印API文档',
      u'杭州胜马科技有限公司', 'manual'),
 ]
 

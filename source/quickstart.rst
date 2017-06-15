@@ -1,28 +1,25 @@
 快速开始
-===========
+========
 
 .. _flow:
 
 对接流程
------------
+--------
 
-1. 申请 ``AccessKey`` , ``SecretKey``
-2. 接口对接
-3. 模板对接
+::
 
-.. _access-key:
+    获取 AccessKey、SecretKey --> 接口调试 --> 模板对接
 
 .. important::
 
     ``AccessKey`` 和 ``SecretKey`` 是您访问胜马云API的密钥，具有该账户完全的权限，请您妥善保管，泄漏后需及时重置。
 
-
 .. _common-params:
 
 公共参数
-------------
+--------
 
-公共参数是指每个接口调用都必须提交的参数,特殊说明除外。
+公共参数是指每个接口调用都必须提交的参数,特殊说明除外。非 Token 鉴权方式在请求头中附带鉴权头。
 
 公共请求头
 ^^^^^^^^^^^^
@@ -30,14 +27,14 @@
 ================ ========== =========================================================================================
 参数名称           是否必须    说明
 ================ ========== =========================================================================================
-Authorization    是          鉴权字符串，由 :ref:`Base64 <base64>` (HMAC-SHA1 + 空格 + :ref:`AccessKey <access-key>` + : + :ref:`Signature <signature>`) 构成，详见本文 签名机制 :ref:`sign` 部分
-Content-Type     否          请求内容的MIME类型。
+Authorization    是          鉴权字符串，计算方式 :ref:`Base64 <base64>` (:ref:`HMAC-SHA1 <hmac-sha1>` + 空格 + : + ``AccessKey`` + : + :ref:`Signature <signature>`) ，详见本文 签名机制 :ref:`sign` 部分
+Content-Type     否          请求内容的MIME类型,默认为 ``application/x-www-form-urlencoded``,上传文件时 ``multipart/form-data``。
 Timestamp        是          请求创建的时间戳(10位)。格林威治时间1970年01月01日00时00分00秒起至现在的总秒数
 ================ ========== =========================================================================================
 
 .. note::
 
-    除特别声明需要指定的请求头之外，其他接口都默认使用 ``application/x-www-form-urlencoded``
+    使用Token 鉴权时无需请求头。
 
 公共返回头
 ^^^^^^^^^^^^
@@ -57,7 +54,7 @@ Timestamp        是          请求创建的时间戳(10位)。格林威治时�
 
 签名计算伪代码
 
-.. code-block:: bash
+.. code-block:: sh
 
     #鉴权字符串
     Authorization = Base64(HMAC-SHA1 + 空格 + AccessKey+ : + Signature)
@@ -114,236 +111,65 @@ Timestamp        是          请求创建的时间戳(10位)。格林威治时�
     Cache-Control: no-cache
     Content-Type: application/x-www-form-urlencoded
 
-    sn=123456789&content=~%25%24_%3D+%2B-*%26!%40
+    content=~~~ !!!+++*&^%$#@?/_&sn=123456789
 
 1. 创建待签字符串
     1. 以请求时间戳开头，后跟换行符。该值必须与您在请求头中(``Timestamp``)使用的值匹配。 ::
 
-        1490606603\n
+        1497508720\n
 
     2. 追加规范查询字符串的哈希。该值后面不跟换行符。
 
         1. 示例请求参数如下 ::
 
-            sn=123456789&content=~%25%24_%3D+%2B-*%26!%40
+            content=~~~ !!!+++*&^%$#@?/_&sn=123456789
 
         2. URI编码排序后查询字符串如下(``CanonicalQueryString``) ::
 
-            content=~%25%24_%3D%20%2B-%2A%26%21%40&sn=123456789
+            content=~~~%20%21%21%21%2B%2B%2B%2A%26%5E%25%24%23%40%3F%2F_&sn=123456789
 
         3. 规范查询字符串哈希(``HashedCanonicalQueryString``) ::
 
             CanonicalQueryString =
-            HashedCanonicalQueryString = HexEncode(Hash("content=~%25%24_%3D%20%2B-%2A%26%21%40&sn=123456789") = "3569685add9e801b08d022098df910d7728a4182"
+            HashedCanonicalQueryString = HexEncode(Hash("content=~~~%20%21%21%21%2B%2B%2B%2A%26%5E%25%24%23%40%3F%2F_&sn=123456789") = "bce2029159576daffb8574ae670697bbbb186281"
 
 
     3. 示例待签字符串(``StringToSign``) ::
 
-        1496497853\n3569685add9e801b08d022098df910d7728a4182
+        1497508720\nbce2029159576daffb8574ae670697bbbb186281
 
 .. _signature:
 
 2. 计算签名(``Signature``), ``AccessKey``: 123456789, ``SecretKey``: 123456789 ::
 
     SecretKey = "123456789"
-    StringToSign = "1496497853\n3569685add9e801b08d022098df910d7728a4182"
+    StringToSign = "1497508720\nbce2029159576daffb8574ae670697bbbb186281"
     Signature = HexEncode(HmacSHA1(StringToSign,SecretKey))
-              = "a44c5a562a106aa72e15f5f3a0fab93cd36996b8"
+              = "e750db371d068d16b36422a6f36bd177daf1c2aa"
 
 3. 生成签名字符串 ::
 
-    Authorization = Base64("HMAC-SHA1 123456789:a44c5a562a106aa72e15f5f3a0fab93cd36996b8")
-                  = "SE1BQy1TSEExIDEyMzQ1Njc4OTphNDRjNWE1NjJhMTA2YWE3MmUxNWY1ZjNhMGZhYjkzY2QzNjk5NmI4"
+    Authorization = Base64("HMAC-SHA1 123456789:e750db371d068d16b36422a6f36bd177daf1c2aa")
+                  = "SE1BQy1TSEExIDEyMzQ1Njc4OTplNzUwZGIzNzFkMDY4ZDE2YjM2NDIyYTZmMzZiZDE3N2RhZjFjMmFh"
 
-4. 完整的请求 ::
+4. 完整的请求报文 ::
 
     POST /v1/print/ HTTP/1.1
     Host: api.sonma.net
-    Authorization: SE1BQy1TSEExIDEyMzQ1Njc4OTphNDRjNWE1NjJhMTA2YWE3MmUxNWY1ZjNhMGZhYjkzY2QzNjk5NmI4
-    Timestamp: 1496497853
+    Authorization: SE1BQy1TSEExIDEyMzQ1Njc4OTplNzUwZGIzNzFkMDY4ZDE2YjM2NDIyYTZmMzZiZDE3N2RhZjFjMmFh
+    Timestamp: 1497508720
     Cache-Control: no-cache
     Content-Type: application/x-www-form-urlencoded
 
-    sn=123456789&content=~%25%24_%3D+%2B-*%26!%40
+    content=~~~%20%21%21%21%2B%2B%2B%2A%26%5E%25%24%23%40%3F%2F_&sn=123456789
 
 .. important::
 
     当请求参数为空时,待签字符串(``StringToSign``)中, ``Timestamp`` 后也要加上 ``\n``
 
-DEMO `GitHub <https://github.com/sonma-tech/demo>`_
+
+`DEMO <https://github.com/sonma-tech/demo>`_
 ----------------------------------------------------
-
-
-
-JAVA
-^^^^^^^^^^^^^^
-
-.. literalinclude:: _static/PrintDemo.java
-    :language: java
-
-JavaScript
-^^^^^^^^^^^^^^
-
-
-.. raw:: html
-
-    <embed>
-            <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-            <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-            <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
-                  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-            <link href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
-            <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-            <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
-                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-                    crossorigin="anonymous"></script>
-            <script src="https://cdn.bootcss.com/crypto-js/3.1.9/core.min.js"></script>
-            <script src="https://cdn.bootcss.com/crypto-js/3.1.9/sha1.min.js"></script>
-            <script src="https://cdn.bootcss.com/crypto-js/3.1.9/hmac.min.js"></script>
-            <script src="https://cdn.bootcss.com/crypto-js/3.1.9/enc-base64.js"></script>
-            <script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
-
-            <script type="text/javascript">
-
-                defaultContent =
-                    "<CB>胜马旗舰店</CB>\n" +
-                    "<C>江虹国际创意园6E1201</C>\n" +
-                    "单号:1002325            时间:2016-07-13 13:24\n" +
-                    "客户:0013               员工:1605\n" +
-                    "------------------------------------------------\n" +
-                    "货号        名称              数量  单价    小计\n" +
-                    "------------------------------------------------\n" +
-                    "XY80        80打印机            2   500     1000\n" +
-                    "------------------------------------------------\n" +
-                    "数量:                           2\n" +
-                    "总计:                                       1000\n" +
-                    "------------------------------------------------\n" +
-                    "<B>微信:500</B>\n" +
-                    "<B>未付:500</B>\n" +
-                    "------------------------------------------------\n" +
-                    "农行卡：6228 4800 8207 8306 717\n" +
-                    "工行卡：6222 0236 0202 3368 921\n" +
-                    "户名：杭州胜马科技有限公司\n" +
-                    "温馨提示：如发现质量问题，凭此开单票据，本市的三天内，外地七日内调换，若人为损坏，开不退换！\n" +
-                    "------------------------------------------------\n" +
-                    "单据打印时间:                   2016-07-13 13:34\n" +
-                    "------------------------------------------------\n" +
-                    "技术支持(全国):0571-85353593           胜马科技";
-
-
-                function encodeRFC3986(str) {
-                    return encodeURIComponent(str)
-                        .replace(/!/g, '%21')
-                        .replace(/\*/g, '%2A')
-                        .replace(/\(/g, '%28')
-                        .replace(/\)/g, '%29')
-                        .replace(/'/g, '%27');
-                }
-                function sonmaPrint() {
-                    var ak = $("#ak")[0].value;
-                    var sk =  $("#sk")[0].value;
-                    var sn =  $("#sn")[0].value;
-                    var content =  $("#content")[0].value;
-
-                    var timestamp = Math.round(+new Date() / 1000);
-
-                    console.log(timestamp);
-
-                    const params = {
-                        "sn": sn,
-                        "content": content
-                    };
-
-
-                    console.log(JSON.stringify(params));
-
-
-                    var queryString = "";
-
-                    Object.keys(params).sort().forEach(function (key) {
-                        if (queryString.length !== 0) {
-                            queryString += "&";
-                        }
-                        queryString += encodeRFC3986(key) + "=" + encodeRFC3986(params[key]);
-                    });
-
-
-                    console.log("规范查询字符串(CanonicalQueryString):" + queryString);
-
-
-                    const hashedQueryString = CryptoJS.SHA1(queryString).toString().toLowerCase();
-
-
-                    console.log("规范查询字符串哈希(HashedCanonicalQueryString):" + hashedQueryString);
-
-
-                    const stringToSign = timestamp + "\n" + hashedQueryString;
-                    console.log("待签字符串(StringToSign):" + stringToSign);
-                    const signature = CryptoJS.HmacSHA1(stringToSign, sk).toString(); //SignatureUtil.macSignature(stringToSign, SK);
-                    console.log("签名(Signature):" + signature);
-                    const authorization = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse("HMAC-SHA1 " + ak + ":" + signature));
-                    console.log("鉴权字符串(Authorization):" + authorization);
-
-                    $.ajax({
-                        type: "POST",
-                        url: "https://api.sonma.net/v1/print",
-                        headers: {
-                            "Authorization": authorization,
-                            "Timestamp": timestamp
-                        },
-                        contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-                        data: queryString,
-                        success: function (data) {
-                            if (data["code"] === 0) {
-                                toastr.success("打印成功")
-                            }else{
-                                toastr.error(data["message"])
-                            }
-                        },
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            toastr.error(errorThrown)
-                        }
-
-                    });
-                }
-
-                $(document).ready(function () {
-                    $("#content").text(defaultContent)
-                })
-            </script>
-        <div class="container" style="width:100%;">
-            <form name="form" id="form-print" class="center">
-                <fieldset>
-                    <div class="input-group input-group-lg">
-                        <span class="input-group-addon" id="addon-ak">@</span>
-                        <input type="text" id="ak" name="ak" placeholder="AccessKey" class="form-control" aria-describedby="addon-ak"/>
-                    </div>
-                    <div class="input-group input-group-lg" style="margin-top: 8px;">
-                        <span class="input-group-addon" id="addon-sk">@</span>
-                        <input type="text" id="sk" name="sk" placeholder="SecretKey" class="form-control" aria-describedby="addon-sk"/>
-                    </div>
-
-                    <div class="input-group input-group-lg" style="margin-top: 8px;">
-                        <span class="input-group-addon" id="addon-sn">@</span>
-                        <input type="text" id="sn" name="sn" placeholder="PrinterSN" class="form-control" aria-describedby="addon-sn"/>
-                    </div>
-
-                    <textarea id="content" name="content" placeholder="Content" class="form-control" rows="10"
-                              style="resize: none;margin-top: 8px;"></textarea>
-                </fieldset>
-                <input type="button"
-                       onclick="sonmaPrint();"
-                       id="btn-print"
-                       value="打印"
-                       class="btn btn-primary btn-lg btn-block"
-                       style="margin-top: 12px;"
-                />
-
-            </form>
-        </div>
-    </embed>
-
-
 
 
 .. _important:
@@ -365,29 +191,33 @@ JavaScript
 错误案例
 ^^^^^^^^^^^^^
 
-把 AK/SK 放在客户端 SDK 中来做签名生成令牌，随 App 被发布出去。
+.. error::
 
-这样做会被人家反编译之后拿到 AK/SK，之后他们就可以对你的账号进行操作。
+    把 AK/SK 放在客户端 SDK 中来做签名生成令牌，随 App 被发布出去。
 
-实际上 Web 端 js 也是可以做签名的，只是你不可能把明文的 AK/SK 放在 Web 端，这样做更加危险。
+    这样做会被人家反编译之后拿到 AK/SK，之后他们就可以对你的账号进行操作。
 
-将 AK/SK 加密后存放在客户端，等用户启动应用的时候再将 AK/SK 解密出来放在内存中，关闭应用后这对 AK/SK 即消失。
+    实际上 Web 端 js 也是可以做签名的，只是你不可能把明文的 AK/SK 放在 Web 端，这样做更加危险。
 
-这样的做法也是不科学的，因为你的 AK/SK 在 后台 随时可以更改，特别是在被泄漏之后建议使用一对新的 AK/SK。如果你写死在 应用 中将其发布，就只能通过发布新版本的 应用 来更新这对 AK/SK。
+    将 AK/SK 加密后存放在客户端，等用户启动应用的时候再将 AK/SK 解密出来放在内存中，关闭应用后这对 AK/SK 即消失。
+
+    这样的做法也是不科学的，因为你的 AK/SK 在 后台 随时可以更改，特别是在被泄漏之后建议使用一对新的 AK/SK。如果你写死在 应用 中将其发布，就只能通过发布新版本的 应用 来更新这对 AK/SK。
 
 最后建议
 ^^^^^^^^^^^^^
 
-出于安全考虑，建议您根据自己的场景周期性地更换密钥。
+.. important::
+
+    出于安全考虑，建议您根据自己的场景周期性地更换密钥。
 
 
 测试账号
 --------------
-AccessKey: 123456789, SecretKey: 123456789, 打印机唯一编号:123456789
+::
+
+    AccessKey: 123456789, SecretKey: 123456789, 打印机唯一编号:123456789
 
 
 .. _glossary:
 
 .. include:: glossary.rst
-
-

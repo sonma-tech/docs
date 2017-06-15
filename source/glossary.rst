@@ -5,5 +5,5 @@
 
 .. glossary::
 
-   Authorization
-      鉴权字符串
+   串号
+      打印机唯一编号
