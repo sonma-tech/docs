@@ -1,7 +1,14 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+#
+from docutils.parsers.rst.directives.admonitions import BaseAdmonition
+from sphinx.util import compat
+compat.make_admonition = BaseAdmonition
+
 import os
 import sys
 import sphinx_rtd_theme
