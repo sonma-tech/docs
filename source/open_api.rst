@@ -275,3 +275,4 @@ sn           否               打印机唯一编号
       "message": "success"
     }
 
+.. include:: return_code.rst
