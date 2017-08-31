@@ -3,13 +3,10 @@
 系统接口
 ========
 
-::
-
-    https://api.sonma.net
 
 .. include:: account.rst
 .. include:: devices.rst
-.. include:: openAPI.rst
-.. include:: printerregister.rst
-.. include:: templatemanage.rst
-.. include:: returncode.rst
+.. include:: open_api.rst
+.. include:: printer_register.rst
+.. include:: template_manage.rst
+.. include:: return_code.rst

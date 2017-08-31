@@ -1,10 +1,5 @@
-.. Sonma OpenAPI documentation master file, created by
-   sphinx-quickstart on Fri Mar 17 15:54:08 2017.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 SONMA API 文档
-==================
+=================================================================
 
 
 ``SONMA API`` 是胜马云打印提供给第三方的API接入方式。
@@ -17,11 +12,16 @@ SONMA API 文档
 .. toctree::
     :maxdepth: 2
 
-    quickstart
-    interface
+    quick_start
+    open_api
     template
     changelog
 
 
 
 .. _openapi@sonma.com.cn: mailto:openapi@sonma.com.cn
+
+
+
+
+
