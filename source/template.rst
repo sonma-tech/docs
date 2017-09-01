@@ -103,99 +103,92 @@ line 直线
 ======== ============= ===================================
 属性      类型           说明
 ======== ============= ===================================
-startX   dimension
-startY   dimension
-endX     dimension
-endY     dimension
+startX   dimension     起点
+startY   dimension     起点
+endX     dimension     终点
+endY     dimension     终点
 ======== ============= ===================================
 
 
 模板示例
 ^^^^^^^^^^^^^^^^^^^
 
-`示例模板 <https://api.sonma.net/template/2002>`_
+`示例模板 <https://api.sonma.net/template/2062>`_
 
 ::
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <page width="100" height="180"  shift-x="1" shift-y="-2" offset="1.2" gap="2">
-        <barcode x="41" y="112" align="right" width="58" height="11" scale="2"><%=barcodeOne%></barcode>
-        <qrcode x="82" y="127" width="16" height="16" align="center" scale="4"><%=qrcodeOne%></qrcode>
-        <qrcode x="82" y="92" width="16" height="16" align="center" scale="4"><%=qrcodeTwo%></qrcode>
-        <barcode x="0" y="69" align="center" width="100" height="18" scale="2"><%=barcodeTwo%></barcode>
-        <barcode x="73" y="27" align="center" width="26" height="5" scale="1" readable-align="none"><%=barcodeOne%></barcode>
-        <line x="0.0" y="10.0" endx="100.0" endy="10.0"/>
-        <line x="0.0" y="25.0" endx="100.0" endy="25.0"/>
-        <line x="0.0" y="35.0" endx="100.0" endy="35.0"/>
-        <line x="0.0" y="55.0" endx="80.0" endy="55.0"/>
-        <line x="80.0" y="40.0" endx="100.0" endy="40.0"/>
-        <line x="0.0" y="65.0" endx="100.0" endy="65.0"/>
-        <line x="0.0" y="90.0" endx="100.0" endy="90.0"/>
-        <line x="0.0" y="90.0" endx="100.0" endy="90.0"/>
-        <line x="0.0" y="110.0" endx="100.0" endy="110.0"/>
-        <line x="0.0" y="125.0" endx="100.0" endy="125.0"/>
-        <line x="0.0" y="145.0" endx="80.4" endy="145.0"/>
-        <line x="0.0" y="155.0" endx="100.2" endy="155.0"/>
-        <line x="73.3" y="25.0" endx="73.3" endy="35.0"/>
-        <line x="5.0" y="35.0" endx="5.0" endy="65.0"/>
-        <line x="80.0" y="35.0" endx="80.0" endy="65.0"/>
-        <line x="45.0" y="90.0" endx="45.0" endy="110.0"/>
-        <line x="80.0" y="90.0" endx="80.0" endy="110.0"/>
-        <line x="80.4" y="125.0" endx="80.4" endy="155.0"/>
-        <line x="5.0" y="125.1" endx="5.0" endy="155.1"/>
-        <text x="1.15" y="41.8" font-size="14">收</text>
-        <text x="1.15" y="44.8" font-size="14">件</text>
-        <text x="1.15" y="57.6" font-size="14">寄</text>
-        <text x="1.15" y="60.6" font-size="14">件</text>
+    <% var contentHeight = _data.record_detail.length*5 %>
 
-        <text x="6.5" y="38.4" font-size="14" font-name="JXLT.TTF"><%=shiptoContactName%></text>
-        <text x="6.5" y="43.5" font-size="18"  font-name="JXLT.TTF" width="64" height="50"><%=shiptoAddress%></text>
-        <text x="6.5" y="56.5" font-size="14"><%=shipFromContactName%></text>
-        <text x="6.5" y="60.6" font-size="14"><%=shipFromAddress%></text>
-
-        <text x="0" y="27.5" align="center" font-size="35" width="73" height="40" font-name="JXLT.TTF"><%=bigheadpenName%></text>
-        <text x="0" y="13" font-size="72" width="100" height="80" align="center"><%=bigheadpenCode%></text>
+    <page xmlns="http://template.sonma.net/schema" height="<%=190+contentHeight%>" width="100">
+        <image x="37.5" y="8" src="logo.BMP" />
+        <text  x="0" y="35" width="100" height="5" font-size="12" align="center" font-name="simhei.TTF">欢迎光临 <%=_data.brand_name%></text>
+        <bar x="3" y="44" width="94" height="1"/>
+        <text x="3" y="48" width="100" height="4" font-size="10" font-name="simsun.TTF" align="left">柜    台：<%=_data.brand_name%></text>
+        <text x="3" y="54" width="100" height="4" font-size="10" font-name="simsun.TTF" align="left">销售单号：<%=_data.record_code%></text>
+        <text x="3" y="59" width="100" height="4" font-size="10" font-name="simsun.TTF" align="left">打印时间：<%=_context.formatStartTime('yyyy-MM-dd HH:mm:ss')%></text>
+        <text x="3" y="64" width="100" height="4" font-size="10" font-name="simsun.TTF" align="left">联系电话：<%=_data.shop_tel%></text>
+        <text x="3" y="69" width="100" height="4" font-size="10" font-name="simsun.TTF" align="left">销售日期：<%=_data.record_time%></text>
+        <text x="3" y="74" width="100" height="4" font-size="10" font-name="simsun.TTF" align="left">收 银 员：<%=_data.user_name%></text>
+        <line x="3" y="80" endx="97" endy="80"/>
+        <text x="3" y="83" width="37.5" height="4" align="center" debug="false" font-name="simsun.TTF">商品</text>
+        <text x="37.5" y="83" width="14.125" height="4" align="center" debug="false" font-name="simsun.TTF">规格</text>
+        <text x="51.625" y="83" width="14.125" height="4" align="center" debug="false" font-name="simsun.TTF">数量</text>
+        <text x="65.75" y="83" width="14.125" height="4" align="center" debug="false" font-name="simsun.TTF">单价</text>
+        <text x="79.875" y="83" width="14.125" height="4" align="center" debug="false" font-name="simsun.TTF">金额</text>
+        <% var y = 89 %>
+        <% for(var i=0; i < _data.record_detail.length; i++)  {%>
+        <text x="3" y="<%=y%>" width="37.5" height="4" align="left" debug="false" font-name="simsun.TTF"><%=_data.record_detail[i].goods_name  || "" %></text>
+        <text x="37.5" y="<%=y%>" width="14.125" height="4" align="center" debug="false" font-name="simsun.TTF"><%=_data.record_detail[i].ggmc || "" %></text>
+        <text x="51.625" y="<%=y%>" width="14.125" height="4" align="center" debug="false" font-name="simsun.TTF"><%=_data.record_detail[i].num || "" %></text>
+        <text x="65.75" y="<%=y%>" width="14.125" height="4" align="center" debug="false" font-name="simsun.TTF"><%=_data.record_detail[i].price  || "" %></text>
+        <text x="79.875" y="<%=y%>" width="14.125" height="4" align="center" debug="false" font-name="simsun.TTF"><%=_data.record_detail[i].money || "" %></text>
+        <% y += 5 %>
+        <%}%>
 
 
-        <text x="88.2" y="36.2" font-size="15">服务</text>
-        <text x="81.5" y="42.3" font-size="14">付款方式：</text>
+        <text x="3" y="<%=y%>" width="37.5" height="4" align="left" debug="false" font-name="simsun.TTF">合计：<%=_data.record_detail.length%></text>
+        <text x="37.5" y="<%=y%>" width="14.125" height="4" align="center" debug="false" font-name="simsun.TTF"><%=_data.total_num%></text>
+        <text x="79.875" y="<%=y%>" width="14.125" height="4" align="center" debug="false" font-name="simsun.TTF"><%=_data.total_money%></text>
+        <%y+=10%>
 
-        <text x="48.0" y="94.1" font-size="18">签收人：</text>
-        <text x="48.0" y="101.0" font-size="18">时间：</text>
-        <text x="1.6" y="93.5" font-size="14">快递描述收件人地址，收件人或者寄件人</text>
-        <text x="1.6" y="97.0" font-size="14">允许牵手，视为描述：您的签字代表您已</text>
-        <text x="1.6" y="100.5" font-size="14">经验收此包裹，并确认商品完好无损，没</text>
-        <text x="1.6" y="104.0" font-size="14">有划痕，没有破损等质量问题。</text>
+        <line x="3" y="<%=y%>" endx="97" endy="<%=y%>"/>
+        <%y+=5%>
 
 
-        <text x="89.8" y="176.1" font-size="14">已验视</text>
-        <text x="1.25" y="132.2" font-size="14">收</text>
-        <text x="1.25" y="135.2" font-size="14">件</text>
-        <text x="1.25" y="148.0" font-size="15">寄</text>
-        <text x="1.25" y="151.0" font-size="16">件</text>
-        <text x="6.5" y="128.8" font-size="14" font-name="JXLT.TTF"><%=shiptoContactName%></text>
-        <text x="6.5" y="133.9" font-size="18" font-name="JXLT.TTF" width="64" height="50"><%=shiptoAddress%></text>
+        <text x="3" y="<%=y%>" width="20" height="4" font-name="simsun.TTF">收银方式</text>
+        <%y+=5%>
 
-        <text x="6.5" y="151.0" font-size="14" ><%=shipFromAddress%></text>
-        <text x="6.5" y="146.9" font-size="14"><%=shipFromContactName%></text>
+        <text x="3" y="<%=y%>" width="100" height="5" font-size="12" font-name="simhei.TTF">实收：<%=_data.pay_money%>  找零：<%=_data.zlje | {}%></text>
+        <%y+=9%>
+        <line x="3" y="<%=y%>" endx="97" endy="<%=y%>"/>
+        <%y+=2%>
+        <qrcode x="74" y="<%=y%>" width="20" height="20" align="right" debug="false">http://mp.weixin.com/r/TEg0LHfEvSrCrTNP9x1e</qrcode>
+        <text x="3" y="<%=y%>" width="100" height="4" font-name="simsun.TTF">会员卡号：<%=_data.vip_code%></text>
+        <%y+=5%>
+        <text x="3" y="<%=y%>" width="100" height="4" font-name="simsun.TTF">本单积分：<%=_data.integral || 0%></text>
+        <%y+=5%>
+        <text x="3" y="<%=y%>" width="100" height="4" font-name="simsun.TTF">会员积分：<%=_data.integral || 0%></text>
+        <%y+=8%>
+
+        <bar x="3" y="<%=y%>" width="94" height="1"/>
+        <%y+=4%>
+        <text x="3" y="<%=y%>" width="20" height="4" font-name="simhei.TTF">退换政策</text>
+        <%y+=6%>
+        <text x="5" y="<%=y%>" width="90" height="50" font-name="simsun.TTF" space="1" font-size="9">1.退换商品必须出示原始收银条，银行卡退款时须多加出示原始签购单及银行卡。
+    2.商品在未经穿着、洗涤、损坏并保留吊牌和洗唛的前提下。在购买后1个月内可退换。
+    3.非顾客原因造成质量问题的商品，3个月内可无条件退换。
+    4.由于顾客自身原因而造成质量问题或已穿着、洗涤、损坏、修改（如长裤、皮带）的商品及贴身商品恕不退还。
+    5.银行卡退款将在30至45个工作日退回原卡。根据银行规定银行卡不可退现金。谢谢惠顾！</text>
 
 
 
-        <text x="92.3" y="42.3" font-size="14"><%=paymentMethod%></text>
-        <text x="3.4" y="159.5" font-size="32"><%=shipFromRemark%></text>
-        <image x="2" y="0" width="30" height="10" src="filename:800best_s.BMP"/>
-        <image x="2" y="111" width="30" height="15" src="filename:800best.BMP"/>
     </page>
-
-
-
-
 
 
 80mm打印机模板说明
 -------------------
 
-支持模板数据分离
 
 .. _paiban:
 
@@ -213,13 +206,14 @@ endY     dimension
 加粗大字         ``<DB>..</DB>``
 居中加粗大字      ``<CDB>..</CDB>``
 换行            ``..<BR>``
+切纸            <CUT>
 ============== ========================== ===================
 
 
 
 .. _template:
 
-动态模板(数据分离)
+动态模板
 ^^^^^^^^^^^^^^^^^^^^^
 
 模板
@@ -251,161 +245,4 @@ endY     dimension
     技术支持(全国):0571-85353593           胜马科技<BR><BR>
     <C><QRCODE>http://weixin.qq.com/r/Xo7WzpnEacQWrd2t99tM</QRCODE></C><BR><BR>
     <CUT>
-
-数据
-
-::
-
-    {
-      "shopName": "ShopName",
-      "shopAddress": "ShopAddress",
-      "orderNumber": "OrderNumber",
-      "date": "2017/06/13 15:00:00",
-      "customerName": "gao",
-      "staffName": "min",
-      "order": [
-        {
-          "name": "1",
-          "ref": "N1001",
-          "num": 8,
-          "price": "8.88",
-          "total": 99
-        },
-        {
-          "name": "1",
-          "ref": "N1001",
-          "num": 8,
-          "price": "8.88",
-          "total": 99
-        },
-        {
-          "name": "1",
-          "ref": "N1001",
-          "num": 8,
-          "price": "8.88",
-          "total": 99
-        },
-        {
-          "name": "1",
-          "ref": "N1001",
-          "num": 8,
-          "price": "8.88",
-          "total": 99
-        },
-        {
-          "name": "1",
-          "ref": "N1001",
-          "num": 8,
-          "price": "8.88",
-          "total": 99
-        },
-        {
-          "name": "1",
-          "ref": "N1001",
-          "num": 8,
-          "price": "8.88",
-          "total": 99
-        },
-        {
-          "name": "1",
-          "ref": "N1001",
-          "num": 8,
-          "price": "8.88",
-          "total": 99
-        },
-        {
-          "name": "1",
-          "ref": "N1001",
-          "num": 8,
-          "price": "8.88",
-          "total": 99
-        },
-        {
-          "name": "1",
-          "ref": "N1001",
-          "num": 8,
-          "price": "8.88",
-          "total": 99
-        },
-        {
-          "name": "1",
-          "ref": "N1001",
-          "num": 8,
-          "price": "8.88",
-          "total": 99
-        },
-        {
-          "name": "1",
-          "ref": "N1001",
-          "num": 8,
-          "price": "8.88",
-          "total": 99
-        },
-        {
-          "name": "1",
-          "ref": "N1001",
-          "num": 8,
-          "price": "8.88",
-          "total": 99
-        },
-        {
-          "name": "1",
-          "ref": "N1001",
-          "num": 8,
-          "price": "8.88",
-          "total": 99
-        },
-        {
-          "name": "1",
-          "ref": "N1001",
-          "num": 8,
-          "price": "8.88",
-          "total": 99
-        },
-        {
-          "name": "1",
-          "ref": "N1001",
-          "num": 8,
-          "price": "8.88",
-          "total": 99
-        },
-        {
-          "name": "1",
-          "ref": "N1001",
-          "num": 8,
-          "price": "8.88",
-          "total": 99
-        }
-      ]
-    }
-
-
-模板数据混合
-^^^^^^^^^^^^
-
-::
-
-    <CB>胜马旗舰店</CB>
-    <C>江虹国际创意园6E1201</C>
-    单号:1002325            时间:2016-07-13 13:24
-    客户:0013               员工:1605
-    ------------------------------------------------
-    货号        名称              数量  单价    小计
-    ------------------------------------------------
-    XY80        80打印机            2   500    1000
-    ------------------------------------------------
-    数量:                            2
-    总计:                                        1000
-    ------------------------------------------------
-    <B>微信:500</B>
-    <B>未付:500</B>
-    ------------------------------------------------
-    农行卡：6228 4800 8207 8306 717
-    工行卡：6222 0236 0202 3368 921
-    户名：杭州胜马科技有限公司
-    温馨提示：如发现质量问题，凭此开单票据，本市的三天内，外地七日内调换，若人为损坏，开不退换！
-    ------------------------------------------------
-    单据打印时间:                   2016-07-13 13:34
-    ------------------------------------------------
-    技术支持(全国):0571-85353593           胜马科技
 

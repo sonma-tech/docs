@@ -192,12 +192,21 @@ token        否               鉴权方式自选
 =========== ================================================
 status         说明
 =========== ================================================
-0           待机
-1           开盖状态
-2           卡纸
-3           开盖并且卡纸
-4           纸张用尽
-136         打印中
+00          Normal
+01          Head opened
+02          Paper Jam
+03          Paper Jam and head opened
+04          Out of paper
+05          Out of paper and head opened
+08          Out of ribbon
+09          Out of ribbon and head opened
+0A          Out of ribbon and paper jam
+0B          Out of ribbon, paper jam and head opened
+0C          Out of ribbon and out of paper
+0D          Out of ribbon, out of paper and head opened
+10          Pause
+20          Printing
+80          Other error
 =========== ================================================
 
 
